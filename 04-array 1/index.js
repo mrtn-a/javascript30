@@ -24,24 +24,113 @@ const people = [
 // Array.prototype.filter()
 // 1. Filter the list of inventors for those who were born in the 1500's
 
+// - loop over the array and give the inventors meeting the condition
+const fifteen = inventors.filter(function(inventor) {
+  if(inventor.year >= 1500 && inventor.year <= 1599) {
+    return true;
+  }
+});
+
+// - clean the code: arrow function
+const fifteen1 = inventors.filter(inventor => {
+  if(inventor.year >= 1500 && inventor.year <= 1599) {
+    return true;
+  }
+});
+
+// - clean the code: 1 liner
+const fifteen2 = inventors.filter(inventor => inventor.year >= 1500 && inventor.year <= 1599);
+
+console.log(fifteen1);
+console.table(fifteen2);
+
+
 // Array.prototype.map()
 // 2. Give us an array of the inventors first and last names
+
+// - .map takes the array and return a new one of the same length -> like a factory machine
+
+const fullNames = inventors.map(inventor => `${inventor.first} ${inventor.last}`);
+
+console.log(fullNames);
+
 
 // Array.prototype.sort()
 // 3. Sort the inventors by birthdate, oldest to youngest
 
+// - .sort compares 2 items
+const ordered = inventors.sort(function(firstperson, secondperson) {
+  if(firstperson.year > secondperson.year) {
+    return 1;
+  } else {
+    return -1;
+  }
+});
+
+// - clean the code: ternary
+const ordered1 = inventors.sort((firstperson, secondperson) => firstperson.year > secondperson.year ? 1 : -1 );
+
+console.log(ordered1);
+
+
 // Array.prototype.reduce()
 // 4. How many years did all the inventors live all together?
 
+// .reduce reduces the array to a single value
+const totalYears = inventors.reduce((total, inventor) => {
+  return total + (inventor.passed - inventor.year);
+}, 0);
+
+console.log(totalYears);
+
 // 5. Sort the inventors by years lived
 
+const oldest = inventors.sort(function(a, b) {
+  const lastGuy = a.passed - a.year;
+  const nextGuy = b.passed - b.year;
+  return lastGuy > nextGuy ? -1 : 1;
+  // if(lastGuy > nextGuy) {
+  //   return -1;
+  // } else {
+  //   return 1;
+  // }
+});
+
+console.table(oldest);
 // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
 // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
 
+//   // - inspect the DOM from the link and find the category we need to select
+// const category = document.querySelector('.mw-category');
+//   // - look for links; return a NodeList that we need to convert into array
+// const links = Array.from(category.querySelectorAll('a'));
+//   // - first we map, then we filter
+// const de = links
+//             .map(link => link.textContent);
+//             .filter(streetName => streetName.includes('de'));
 
 // 7. sort Exercise
 // Sort the people alphabetically by last name
 
+const alphabetically = people.sort((lastOne, nextOne) => {
+  const [aLast, aFirst] = lastOne.split(', ');
+  const [bLast, bFirst] = nextOne.split(', ');
+  return aLast > bLast ? 1 : -1;
+});
+
+console.log(alphabetically);
+
 // 8. Reduce Exercise
 // Sum up the instances of each of these
 const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+
+// - start with a blank object {}, and then every time we loop over one we first see if it's already there and then we increment
+const transportation = data.reduce(function(object, item) {
+  if (!object[item]) {
+    object[item] = 0;
+  }
+  object[item]++;
+  return object;
+}, {});
+
+console.log(transportation);
