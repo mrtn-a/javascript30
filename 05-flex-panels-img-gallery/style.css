@@ -71,5 +71,11 @@ body {
 }
 
 .panel.open {
+  flex: 5; /*will take 5times the amount of extra room*/
   font-size: 40px;
 }
+
+.panel > *:first-child { transform: translateY(-100%); }
+.panel.open-active > *:first-child { transform: translateY(0); }
+.panel > *:last-child { transform: translateY(100%); }
+.panel.open-active > *:last-child { transform: translateY(0); }
